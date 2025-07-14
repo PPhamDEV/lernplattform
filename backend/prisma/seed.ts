@@ -139,16 +139,58 @@ async function createUser() {
 async function createFakeUsers() {
   console.log('Creating fake users...');
   const hashedPassword = await bcrypt.hash('password123', 10);
-  const fakeUsers = Array.from({ length: 15 }).map((_, i) => ({
-    email: `user${i + 1}@example.com`,
-    username: `user${i + 1}`,
-    password: hashedPassword,
-    firstName: `User${i + 1}`,
-    lastName: 'Test',
-    level: Math.floor(Math.random() * 10) + 1,
-    xp: Math.floor(Math.random() * 2000),
-    streak: 0,
-  }));
+  const fakeUsers = [
+    {
+      email: 'anna.schmidt@example.com',
+      username: 'annaschmidt',
+      password: hashedPassword,
+      firstName: 'Anna',
+      lastName: 'Schmidt',
+      level: 1,
+      xp: 120,
+      streak: 0,
+    },
+    {
+      email: 'ben.mueller@example.com',
+      username: 'benmueller',
+      password: hashedPassword,
+      firstName: 'Ben',
+      lastName: 'Müller',
+      level: 1,
+      xp: 80,
+      streak: 0,
+    },
+    {
+      email: 'clara.schneider@example.com',
+      username: 'claraschneider',
+      password: hashedPassword,
+      firstName: 'Clara',
+      lastName: 'Schneider',
+      level: 1,
+      xp: 150,
+      streak: 0,
+    },
+    {
+      email: 'david.fischer@example.com',
+      username: 'davidfischer',
+      password: hashedPassword,
+      firstName: 'David',
+      lastName: 'Fischer',
+      level: 1,
+      xp: 60,
+      streak: 0,
+    },
+    {
+      email: 'emma.weber@example.com',
+      username: 'emmaweber',
+      password: hashedPassword,
+      firstName: 'Emma',
+      lastName: 'Weber',
+      level: 1,
+      xp: 40,
+      streak: 0,
+    },
+  ];
 
   for (const data of fakeUsers) {
     await prisma.user.create({ data });
