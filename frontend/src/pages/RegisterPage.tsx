@@ -1,11 +1,21 @@
 // src/pages/RegisterPage.tsx
 import React from 'react';
+import { Navigate } from 'react-router-dom';
+import { useAuth as useClerkAuth } from '@clerk/clerk-react';
 import RegisterLeftPanel from '../components/login/RegisterLeftPanel';
 import LoginRightPanel from '../components/login/LoginRightPanel';
 import AnimatedBackgroundEffects from '../components/custom/AnimatedBackgroundEffects';
+import { useAuth } from '../hooks/useAuth';
 
 
 export default function RegisterPage() {
+  const { user } = useAuth();
+  const { isSignedIn } = useClerkAuth();
+
+  if (user || isSignedIn) {
+    return <Navigate to="/home" replace />;
+  }
+
   return (
     <div className="h-screen grid grid-cols-[2fr_3fr]">
       <div className="flex flex-col items-center justify-center bg-white h-screen">
