@@ -57,8 +57,22 @@ npx prisma migrate reset: drop the database, reapply all migrate (Only if there 
 ```
 
 ```
-Databank Table 
+Databank Table
 npx prisma studio
+
+When running the project via Docker Compose, execute Prisma Studio inside the
+backend container so it can reach the `db` service:
+
+```bash
+docker compose exec backend npx prisma studio
+```
+
+If you prefer to run Prisma Studio on your host machine, override the
+`DATABASE_URL` to use `localhost` instead of `db`:
+
+```bash
+DATABASE_URL="postgresql://germangains:germangains@localhost:5432/germangainsdb?schema=public" npx prisma studio
+```
 ```
 
 ## Insert, Delete, Update,.. data for models
