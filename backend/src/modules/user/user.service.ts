@@ -71,6 +71,12 @@ export const refreshAccessToken = async (refreshToken: string) => {
 export const logoutUser = (refreshToken: string) =>
   prisma.refreshToken.deleteMany({ where: { token: refreshToken } });
 
+export const createSessionTokens = async (userId: string) => {
+  const token = generateToken(userId);
+  const refreshToken = await storeRefreshToken(userId);
+  return { token, refreshToken };
+};
+
 const storeRefreshToken = async (userId: string) => {
   const refreshToken = generateRefreshToken(userId);
   await prisma.refreshToken.create({
