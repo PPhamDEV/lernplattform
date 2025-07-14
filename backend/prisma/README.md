@@ -57,14 +57,26 @@ npx prisma migrate reset: drop the database, reapply all migrate (Only if there 
 ```
 
 ```
+
 Databank Table
 npx prisma studio
 
 When running the project via Docker Compose, execute Prisma Studio inside the
-backend container so it can reach the `db` service:
+backend container so it can reach the `db` service. Expose port `5555` in
+`docker-compose.yml`:
+
+```yaml
+  backend:
+    ports:
+      - "3000:3000"
+      - "5555:5555" # allow Prisma Studio access
+```
+
+Start Prisma Studio with the container's port and hostname options so it is
+accessible from your host:
 
 ```bash
-docker compose exec backend npx prisma studio
+docker compose exec backend npx prisma studio --port 5555 --hostname 0.0.0.0
 ```
 
 If you prefer to run Prisma Studio on your host machine, override the
