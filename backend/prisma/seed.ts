@@ -15,6 +15,7 @@ async function main() {
 
   // Create a demo user account
   const demoUser = await createUser();
+  await createFakeUsers();
   // Create course progression (A1.1 - A2.2)
   const courses = await createCourses();
   // Create modules for A1.1 (first unlocked, second locked)
@@ -133,6 +134,27 @@ async function createUser() {
   
   console.log(`Created demo user: ${user.username}`);
   return user;
+}
+
+async function createFakeUsers() {
+  console.log('Creating fake users...');
+  const hashedPassword = await bcrypt.hash('password123', 10);
+  const fakeUsers = Array.from({ length: 15 }).map((_, i) => ({
+    email: `user${i + 1}@example.com`,
+    username: `user${i + 1}`,
+    password: hashedPassword,
+    firstName: `User${i + 1}`,
+    lastName: 'Test',
+    level: Math.floor(Math.random() * 10) + 1,
+    xp: Math.floor(Math.random() * 2000),
+    streak: 0,
+  }));
+
+  for (const data of fakeUsers) {
+    await prisma.user.create({ data });
+  }
+
+  console.log(`Created ${fakeUsers.length} fake users.`);
 }
 
 /**
