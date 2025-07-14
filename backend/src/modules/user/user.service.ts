@@ -146,3 +146,20 @@ export const createSocialUserAlt = async (data: {
     },
   });
 };
+
+export const getLeaderboard = async (limit = 10) => {
+  return await prisma.user.findMany({
+    orderBy: {
+      xp: "desc",
+    },
+    take: limit,
+    select: {
+      id: true,
+      username: true,
+      firstName: true,
+      lastName: true,
+      level: true,
+      xp: true,
+    },
+  });
+};
